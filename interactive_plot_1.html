@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "100% Natural Lip Balm - Sweet Cherry", "label": "100% Natural Lip Balm - Sweet Cherry", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Scratch And Win Cards ", "label": "Scratch And Win Cards ", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "3 in 1 Micellar Cleansing Water 400ml", "label": "3 in 1 Micellar Cleansing Water 400ml", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Age Defense Tinted Facial Fluid Sunscreen SPF 50+ ", "label": "Age Defense Tinted Facial Fluid Sunscreen SPF 50+ ", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Propolis Facial Wash", "label": "Propolis Facial Wash", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "3 in 1 Micellar Cleansing Water 100ml", "label": "3 in 1 Micellar Cleansing Water 100ml", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Coco-Vanilla Shower Cream", "label": "Coco-Vanilla Shower Cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Feminine Hygienic Wash", "label": "Feminine Hygienic Wash", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Keratin Shampoo", "label": "Keratin Shampoo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Lip Care - Shimmery Cherry", "label": "Lip Care - Shimmery Cherry", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Micellar Water (400ML+100ML Free)", "label": "Micellar Water (400ML+100ML Free)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Ultrascreen Cream Invisible Sunfilter SPF 50", "label": "Ultrascreen Cream Invisible Sunfilter SPF 50", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Whitening Facial Toner", "label": "Whitening Facial Toner", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Wild Bees Conservation Flyer - Seeds", "label": "Wild Bees Conservation Flyer - Seeds", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Exotic Papaya Shower Cream", "label": "Exotic Papaya Shower Cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fortifying Shampoo", "label": "Fortifying Shampoo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Lavender Shower Cream", "label": "Lavender Shower Cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Watermelon Shower Cream", "label": "Watermelon Shower Cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Dandruff Relief Shampoo", "label": "Dandruff Relief Shampoo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Keratin Conditioner", "label": "Keratin Conditioner", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Keratin Hair Routine", "label": "Keratin Hair Routine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Keratin Oil Replacement", "label": "Keratin Oil Replacement", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Nourishing Shampoo", "label": "Nourishing Shampoo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Nourishing Facial Day Cream SPF 25 (Oily to Combination)", "label": "Nourishing Facial Day Cream SPF 25 (Oily to Combination)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "After Sun Cooling Lotion", "label": "After Sun Cooling Lotion", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Suntan Oil", "label": "Suntan Oil", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Suntan Oil Gold", "label": "Suntan Oil Gold", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fortifying Conditioner", "label": "Fortifying Conditioner", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Fortifying Hair Routine", "label": "Fortifying Hair Routine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Dandruff Relief Conditioner", "label": "Dandruff Relief Conditioner", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Dandruff Relief Hair Routine", "label": "Dandruff Relief Hair Routine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Nourishing Conditioner", "label": "Nourishing Conditioner", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Nourishing Hair Routine", "label": "Nourishing Hair Routine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Lip Care Shimmery Cherry  (1+1 Free)", "label": "Lip Care Shimmery Cherry  (1+1 Free)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Lip Care Shimmery Strawberry  (1+1 Free)", "label": "Lip Care Shimmery Strawberry  (1+1 Free)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Natural Roll-On Deo - Cotton Candy", "label": "Natural Roll-On Deo - Cotton Candy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Natural Roll-On Deo - Beauty Pearl", "label": "Natural Roll-On Deo - Beauty Pearl", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Natural Roll-On Deo - Elder Rose", "label": "Natural Roll-On Deo - Elder Rose", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Natural Roll-On Deo - Sport Pulse", "label": "Natural Roll-On Deo - Sport Pulse", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Natural Roll-On Deo - Cool Breeze", "label": "Natural Roll-On Deo - Cool Breeze", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Night Complex Cream", "label": "Night Complex Cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Whitening Lifting Night Cream", "label": "Whitening Lifting Night Cream", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Whitening Day Cream SPF 30", "label": "Whitening Day Cream SPF 30", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Whitening Day Cream SPF 30 - Dry to Normal", "label": "Whitening Day Cream SPF 30 - Dry to Normal", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Whitening Eye Contour Cream SPF 30", "label": "Whitening Eye Contour Cream SPF 30", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "100% Natural Lip Balm - Sweet Cherry", "to": "Scratch And Win Cards ", "width": 14.073045607560024}, {"from": "Scratch And Win Cards ", "to": "3 in 1 Micellar Cleansing Water 400ml", "width": 2.7213269509058913}, {"from": "Scratch And Win Cards ", "to": "Age Defense Tinted Facial Fluid Sunscreen SPF 50+ ", "width": 12.418407627250156}, {"from": "Scratch And Win Cards ", "to": "Propolis Facial Wash", "width": 4.999192065652561}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "3 in 1 Micellar Cleansing Water 100ml", "width": 8.302076799480542}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Coco-Vanilla Shower Cream", "width": 2.129485721164786}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Feminine Hygienic Wash", "width": 1.8066633336897988}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Keratin Shampoo", "width": 1.886103137298378}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Lip Care - Shimmery Cherry", "width": 2.46236766763134}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Micellar Water (400ML+100ML Free)", "width": 13.310290264543108}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Propolis Facial Wash", "width": 2.108081294078744}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Ultrascreen Cream Invisible Sunfilter SPF 50", "width": 1.4744665587562813}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Whitening Facial Toner", "width": 2.5479853225788}, {"from": "3 in 1 Micellar Cleansing Water 400ml", "to": "Wild Bees Conservation Flyer - Seeds", "width": 3.855171927373305}, {"from": "3 in 1 Micellar Cleansing Water 100ml", "to": "Micellar Water (400ML+100ML Free)", "width": 43.81812539639394}, {"from": "Coco-Vanilla Shower Cream", "to": "Exotic Papaya Shower Cream", "width": 10.210388106746963}, {"from": "Coco-Vanilla Shower Cream", "to": "Fortifying Shampoo", "width": 5.24786200156064}, {"from": "Coco-Vanilla Shower Cream", "to": "Keratin Shampoo", "width": 4.374904060197923}, {"from": "Coco-Vanilla Shower Cream", "to": "Lavender Shower Cream", "width": 8.62416071749102}, {"from": "Coco-Vanilla Shower Cream", "to": "Watermelon Shower Cream", "width": 10.569921302956079}, {"from": "Feminine Hygienic Wash", "to": "Propolis Facial Wash", "width": 2.938778704866148}, {"from": "Keratin Shampoo", "to": "Dandruff Relief Shampoo", "width": 5.513827894712601}, {"from": "Keratin Shampoo", "to": "Fortifying Shampoo", "width": 5.13682722506937}, {"from": "Keratin Shampoo", "to": "Keratin Conditioner", "width": 25.161139769098504}, {"from": "Keratin Shampoo", "to": "Keratin Hair Routine", "width": 25.161139769098504}, {"from": "Keratin Shampoo", "to": "Keratin Oil Replacement", "width": 12.700736973821215}, {"from": "Keratin Shampoo", "to": "Lavender Shower Cream", "width": 5.340442223718519}, {"from": "Keratin Shampoo", "to": "Nourishing Shampoo", "width": 6.037889403102718}, {"from": "Propolis Facial Wash", "to": "Nourishing Facial Day Cream SPF 25 (Oily to Combination)", "width": 4.464454630508405}, {"from": "Propolis Facial Wash", "to": "Ultrascreen Cream Invisible Sunfilter SPF 50", "width": 2.2531079612042477}, {"from": "After Sun Cooling Lotion", "to": "Suntan Oil", "width": 14.199536922470601}, {"from": "After Sun Cooling Lotion", "to": "Suntan Oil Gold", "width": 9.218653363299119}, {"from": "Fortifying Shampoo", "to": "Dandruff Relief Shampoo", "width": 6.892746632082859}, {"from": "Fortifying Shampoo", "to": "Fortifying Conditioner", "width": 26.720948194726716}, {"from": "Fortifying Shampoo", "to": "Fortifying Hair Routine", "width": 29.16600227790433}, {"from": "Fortifying Shampoo", "to": "Keratin Conditioner", "width": 4.761977264589427}, {"from": "Fortifying Shampoo", "to": "Lavender Shower Cream", "width": 5.954538215442716}, {"from": "Fortifying Shampoo", "to": "Nourishing Shampoo", "width": 8.885007316447677}, {"from": "Dandruff Relief Conditioner", "to": "Dandruff Relief Hair Routine", "width": 89.82432782000011}, {"from": "Dandruff Relief Conditioner", "to": "Dandruff Relief Shampoo", "width": 83.82616578090693}, {"from": "Dandruff Relief Hair Routine", "to": "Dandruff Relief Shampoo", "width": 40.012109375}, {"from": "Fortifying Hair Routine", "to": "Fortifying Conditioner", "width": 80.92659627953746}, {"from": "Keratin Conditioner", "to": "Keratin Hair Routine", "width": 30.840654448081686}, {"from": "Keratin Conditioner", "to": "Keratin Oil Replacement", "width": 13.111851921518726}, {"from": "Nourishing Shampoo", "to": "Nourishing Conditioner", "width": 56.86473781181124}, {"from": "Nourishing Shampoo", "to": "Nourishing Hair Routine", "width": 39.902999610440204}, {"from": "Lip Care Shimmery Cherry  (1+1 Free)", "to": "Lip Care Shimmery Strawberry  (1+1 Free)", "width": 17.750700239026507}, {"from": "Natural Roll-On Deo - Cotton Candy", "to": "Natural Roll-On Deo - Beauty Pearl", "width": 13.006936863130303}, {"from": "Natural Roll-On Deo - Beauty Pearl", "to": "Natural Roll-On Deo - Elder Rose", "width": 13.58328836455948}, {"from": "Natural Roll-On Deo - Sport Pulse", "to": "Natural Roll-On Deo - Cool Breeze", "width": 20.31967420704103}, {"from": "Night Complex Cream", "to": "Nourishing Facial Day Cream SPF 25 (Oily to Combination)", "width": 10.634620307460237}, {"from": "Nourishing Hair Routine", "to": "Nourishing Conditioner", "width": 56.86473781181124}, {"from": "Whitening Lifting Night Cream", "to": "Whitening Day Cream SPF 30", "width": 18.704322995211367}, {"from": "Whitening Lifting Night Cream", "to": "Whitening Day Cream SPF 30 - Dry to Normal", "width": 11.182952914552063}, {"from": "Whitening Lifting Night Cream", "to": "Whitening Eye Contour Cream SPF 30", "width": 9.166720412728907}, {"from": "Whitening Day Cream SPF 30 - Dry to Normal", "to": "Whitening Eye Contour Cream SPF 30", "width": 10.956473519467524}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.005,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 230
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
